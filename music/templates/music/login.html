@@ -1,0 +1,14 @@
+{% extends "music/base.html" %}
+
+{% block content %}
+<br><br>
+<div class="container">
+  <h1>Login</h1>
+  <br>
+  <form method="POST">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <input type="submit"/>
+  </form>
+</div>
+{% endblock %}

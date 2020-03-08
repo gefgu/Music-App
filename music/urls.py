@@ -5,5 +5,8 @@ app_name = "music"
 urlpatterns = [
     path('', views.MusicFileListView.as_view(), name="index"),
     path('playlists/', views.PlaylistListView.as_view(), name="playlists"),
-    path('playlist/<int:pk>', views.PlaylistDetailView.as_view(), name="playlist_detail")
+    path('playlist/<int:pk>', views.PlaylistDetailView.as_view(), name="playlist_detail"),
+    path('accounts/login/', views.login_view, name="login"),
+    path('accounts/register/', views.register_view, name="register"),
+    path('accounts/logout/', views.logout_view, name="logout"),
 ]
