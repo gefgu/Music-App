@@ -1,0 +1,16 @@
+{% extends "music/base.html" %}
+
+{% block content %}
+<br><br><br>
+
+<div class="container">
+  <h1>Playlists</h1>
+  <br><br>
+  {% for playlist in playlists %}
+      <h2><a href="{% url 'music:playlist_detail' pk=playlist.pk %}">{{ playlist.name }}</a></h2>
+  {% endfor %}
+</div>
+
+
+
+{% endblock content %}

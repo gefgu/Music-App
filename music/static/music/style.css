@@ -1,0 +1,29 @@
+div.musicPlayer, div.fixed-bottom {
+  width: 100%;
+  background-color: black;
+  height: 20%;
+  color: white;
+}
+
+#artistPlayed {
+  font-style: italic;
+}
+
+#musicPlayed {
+  font-size: 2em;
+  font-weight: bold;
+}
+
+.music-row {
+  cursor: pointer;
+}
+
+tr *{
+  font-size: 1.25em;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+}

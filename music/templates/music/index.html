@@ -1,42 +1,49 @@
-<!DOCTYPE html>
-<html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <title>Music App</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-  </head>
-  <body>
-    <br>
+{% extends 'music/base.html' %}
+
+{% block content %}
+    <br><br><br>
+
     <div class="container">
-      <div class="jumbotron">
-        <ul>
-        {% for music in musics %}
-          <li>
-            <p>{{ music }} <button type="button" name="button" class="btn btn-link" onclick="playMusic('media/{{music.file}}', '{{ music.formatted_name }}')">Play</button></p>
-          </li>
-        {% endfor %}
-        </ul>
-      </div>
+      {% if playlist %}
+        <h2>{{ playlist.name }}</h2>
+        <br>
+      {% endif %}
+      <table class="table table-hover">
+        <thead>
+          <th>Music Name</th>
+          <th>Artist</th>
+        </thead>
+        <tbody>
+          {% if playlist %}
+            {% for music in playlist.musics.all %}
+              <tr onclick="playMusic('{{music.file.url}}', '{{ music.formatted_name }}', '{{ music.artist }}')" class="music-row">
+                <td><p class="listing-music-name">{{ music.name }}</p></td>
+                <td><p>{{ music.artist }}</p></td>
+              </tr>
+            {% endfor %}
+          {% else %}
+            {% for music in musics %}
+              <tr onclick="playMusic('{{music.file.url}}', '{{ music.formatted_name }}', '{{ music.artist }}')" class="music-row">
+                <td><p class="listing-music-name">{{ music.name }}</p></td>
+                <td><p>{{ music.artist }}</p></td>
+              </tr>
+            {% endfor %}
+          {% endif %}
+        </tbody>
+      </table>
     </div>
 
-    <div class="fixed-bottom container jumbotron">
-      <h4 id="musicPlayed"></h4>
+
+    <!-- Black bottom -->
+    <div class="fixed-bottom"></div>
+
+    <div class="fixed-bottom container musicPlayer">
       <br>
-      <audio id="musicPlayer" controls="controls" style="width: 100%; height: 50px;" autoplay><source id="musicPlayerSource" type="audio/mp3"/></audio>
+      <h4 id="musicPlayed"></h4>
+      <p id="artistPlayed" class="lead"></p>
+      <audio id="musicPlayer" controls style="width: 100%; height: 50px;" autoplay onended="endMusic()"><source id="musicPlayerSource" type="audio/mp3"/></audio>
+      <p id="hiddenMusicPlayed" style="display: none;"></p>
+      <br><br><br>
     </div>
-  </body>
 
-  <script type="text/javascript">
-    function playMusic(path, name) {
-      var playerSource = document.getElementById("musicPlayerSource");
-      var musicName = document.getElementById("musicPlayed");
-      var musicPlayer = document.getElementById("musicPlayer");
-
-      musicPlayer.pause();
-
-      musicName.innerHTML = name;
-      playerSource.setAttribute("src", path);
-      musicPlayer.load();
-    }
-  </script>
-</html>
+{% endblock content %}
