@@ -3,39 +3,32 @@
 {% block content %}
     <br><br><br>
 
-    <div class="container">
+    <div class="container music-presentation">
       {% if playlist %}
         <h2>{{ playlist.name }}</h2>
-        <br>
       {% else %}
         <h2>Hello, {{ user.username }}</h2>
         <br>
         <h4>See the latests musics uploaded</h4>
-        <br>
       {% endif %}
-      <table class="table table-hover">
-        <thead>
-          <th>Music Name</th>
-          <th>Artist</th>
-        </thead>
-        <tbody>
-          {% if playlist %}
-            {% for music in playlist.musics.all %}
-              <tr onclick="playMusic('{{music.file.url}}', '{{ music.formatted_name }}', '{{ music.artist }}')" class="music-row">
-                <td><p class="listing-music-name">{{ music.name }}</p></td>
-                <td><p><em>{{ music.artist }}</em></p></td>
-              </tr>
-            {% endfor %}
-          {% else %}
-            {% for music in musics %}
-              <tr onclick="playMusic('{{music.file.url}}', '{{ music.formatted_name }}', '{{ music.artist }}')" class="music-row">
-                <td><p class="listing-music-name">{{ music.name }}</p></td>
-                <td><p><em>{{ music.artist }}</em></p></td>
-              </tr>
-            {% endfor %}
-          {% endif %}
-        </tbody>
-      </table>
+      <hr>
+      <div class="music-listing">
+        {% if playlist %}
+          {% for music in playlist.musics.all %}
+            <div onclick="playMusic('{{music.file.url}}', '{{ music.formatted_name }}', '{{ music.artist }}')" class="music-row">
+              <h3 class="listing-music-name">{{ music.name }}</h3>
+              <p> <em>{{ music.artist }}</em> </p>
+            </div>
+          {% endfor %}
+        {% else %}
+          {% for music in musics %}
+            <div onclick="playMusic('{{music.file.url}}', '{{ music.formatted_name }}', '{{ music.artist }}')" class="music-row">
+              <h3 class="listing-music-name">{{ music.name }}</h3>
+              <p> <em>{{ music.artist }}</em> </p>
+            </div>
+          {% endfor %}
+        {% endif %}
+      </div>
     </div>
 
 {% endblock content %}
