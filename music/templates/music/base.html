@@ -90,17 +90,21 @@
       var trList = document.getElementsByClassName("music-row");
       var randomNumber = null;
 
-      while (true) {
-        randomNumber = Math.floor(Math.random() * trList.length);
-        console.log(randomNumber);
+      if (trList.length > 1) {
+        while (true) {
+          randomNumber = Math.floor(Math.random() * trList.length);
+          console.log(randomNumber);
 
-        var randomSource = String(trList[randomNumber].onclick);
-        var sourcePlayed = String(document.getElementById("hiddenMusicPlayed").innerHTML)
+          var randomSource = String(trList[randomNumber].onclick);
+          var sourcePlayed = String(document.getElementById("hiddenMusicPlayed").innerHTML)
 
-        if (randomSource != sourcePlayed) {
-          trList[randomNumber].click();
-          return
+          if (randomSource != sourcePlayed) {
+            trList[randomNumber].click();
+            return
+          }
         }
+      } else {
+        trList[0].click()
       }
     }
   </script>

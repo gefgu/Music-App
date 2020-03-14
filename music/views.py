@@ -35,11 +35,28 @@ class MusicCreateView(LoginRequiredMixin, CreateView):
     model = MusicFile
     fields = ['name', 'artist', 'file']
     success_url = reverse_lazy('music:index')
+    template_name = 'music/create_form.html'
+
+    def get_context_data(self, **kwargs):
+        # Call the base implementation first to get a context
+        context = super().get_context_data(**kwargs)
+        # Add in a QuerySet of all the books
+        context['title'] = "Upload Music"
+        return context
 
 class PlaylistCreateView(LoginRequiredMixin, CreateView):
     model = Playlist
     fields = ['name', 'musics']
     success_url = reverse_lazy('music:index')
+
+    template_name = 'music/create_form.html'
+
+    def get_context_data(self, **kwargs):
+        # Call the base implementation first to get a context
+        context = super().get_context_data(**kwargs)
+        # Add in a QuerySet of all the books
+        context['title'] = "Create Playlist"
+        return context
 
 ## LOGIN SYSTEM
 
