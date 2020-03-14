@@ -2,10 +2,10 @@ from django.shortcuts import render
 from django.views.generic import ListView
 from django.views.generic.detail import DetailView
 from .models import MusicFile, Playlist
-from django.contrib.auth.forms import UserCreationForm
-from django.urls import reverse_lazy
+from django.views.generic.edit import CreateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect
+from django.urls import reverse_lazy
 from django.contrib.auth import (
     authenticate,
     get_user_model,
@@ -14,12 +14,12 @@ from django.contrib.auth import (
 )
 from .forms import UserLoginForm, UserRegisterForm
 
-
 # Create your views here.
 class MusicFileListView(LoginRequiredMixin, ListView):
     model = MusicFile
     context_object_name = 'musics'
     template_name = 'music/index.html'
+    queryset = MusicFile.objects.all().order_by("-id")
 
 class PlaylistListView(LoginRequiredMixin, ListView):
     model = Playlist
@@ -30,6 +30,18 @@ class PlaylistDetailView(LoginRequiredMixin, DetailView):
     model = Playlist
     template_name = 'music/index.html'
     context_object_name = "playlist"
+
+class MusicCreateView(LoginRequiredMixin, CreateView):
+    model = MusicFile
+    fields = ['name', 'artist', 'file']
+    success_url = reverse_lazy('music:index')
+
+class PlaylistCreateView(LoginRequiredMixin, CreateView):
+    model = Playlist
+    fields = ['name', 'musics']
+    success_url = reverse_lazy('music:index')
+
+## LOGIN SYSTEM
 
 def login_view(request):
     next = request.GET.get('next')

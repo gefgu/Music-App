@@ -7,6 +7,11 @@
       {% if playlist %}
         <h2>{{ playlist.name }}</h2>
         <br>
+      {% else %}
+        <h2>Hello, {{ user.username }}</h2>
+        <br>
+        <h4>See the latests musics uploaded</h4>
+        <br>
       {% endif %}
       <table class="table table-hover">
         <thead>
@@ -18,14 +23,14 @@
             {% for music in playlist.musics.all %}
               <tr onclick="playMusic('{{music.file.url}}', '{{ music.formatted_name }}', '{{ music.artist }}')" class="music-row">
                 <td><p class="listing-music-name">{{ music.name }}</p></td>
-                <td><p>{{ music.artist }}</p></td>
+                <td><p><em>{{ music.artist }}</em></p></td>
               </tr>
             {% endfor %}
           {% else %}
             {% for music in musics %}
               <tr onclick="playMusic('{{music.file.url}}', '{{ music.formatted_name }}', '{{ music.artist }}')" class="music-row">
                 <td><p class="listing-music-name">{{ music.name }}</p></td>
-                <td><p>{{ music.artist }}</p></td>
+                <td><p><em>{{ music.artist }}</em></p></td>
               </tr>
             {% endfor %}
           {% endif %}

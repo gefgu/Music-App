@@ -1,0 +1,16 @@
+{% extends "music/base.html" %}
+
+{% block content %}
+<br><br>
+<div class="container">
+  <div class="jumbotron">
+    <h1>Create Playlist</h1>
+    <br>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Save"/>
+    </form>
+  </div>
+</div>
+{% endblock %}

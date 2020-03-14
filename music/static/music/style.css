@@ -22,10 +22,14 @@ div.fixed-bottom {
   cursor: pointer;
 }
 
-tr *{
+tr p{
   font-size: 1.25em;
   margin-bottom: 0;
   padding-bottom: 0;
+}
+
+tr em {
+  font-size: 1em;
 }
 
 tr {
