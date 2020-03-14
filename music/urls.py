@@ -11,4 +11,5 @@ urlpatterns = [
     path('accounts/logout/', views.logout_view, name="logout"),
     path('create/music', views.MusicCreateView.as_view(), name="upload_music"),
     path('create/playlist', views.PlaylistCreateView.as_view(), name="create_playlist"),
+    path('musicPlayer', views.musicPlayer, name="music_player")
 ]

@@ -58,6 +58,10 @@ class PlaylistCreateView(LoginRequiredMixin, CreateView):
         context['title'] = "Create Playlist"
         return context
 
+
+def musicPlayer(request):
+    return render(request, "music/musicPlayer.html")
+
 ## LOGIN SYSTEM
 
 def login_view(request):

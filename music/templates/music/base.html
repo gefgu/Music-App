@@ -69,13 +69,39 @@
 
   </body>
   <script type="text/javascript">
+    window.addEventListener('load', function() {
+      var musicPlayerDiv = document.getElementsByClassName("musicPlayer")[0];
+
+      var oldMusicPlayerDiv = localStorage.getItem('musicPlayer');
+      var oldMusicTime = localStorage.getItem('musicTime');
+
+      if (oldMusicPlayerDiv != undefined) {
+        musicPlayerDiv.innerHTML = oldMusicPlayerDiv;
+
+        var musicPlayer = document.getElementById("musicPlayer");
+        musicPlayer.addEventListener("canplay", putTimeMusicAtStart(musicPlayer, oldMusicTime));
+      };
+    });
+
+    function putTimeMusicAtStart(musicPlayer, oldMusicTime) {
+      musicPlayer.currentTime = oldMusicTime;
+      musicPlayer.play();
+    }
+
+    window.addEventListener('unload', function() {
+      var musicPlayerDiv = document.getElementsByClassName("musicPlayer")[0];
+      var musicTime = document.getElementById("musicPlayer").currentTime;
+
+      localStorage.setItem('musicPlayer', musicPlayerDiv.innerHTML);
+      localStorage.setItem('musicTime', musicTime);
+    });
+
     function playMusic(path, name, artist) {
       var playerSource = document.getElementById("musicPlayerSource");
       var musicName = document.getElementById("musicPlayed");
       var musicArtist = document.getElementById("artistPlayed");
       var musicPlayer = document.getElementById("musicPlayer");
 
-      console.log(playMusic.caller);
       document.getElementById("hiddenMusicPlayed").innerHTML = playMusic.caller;
 
       musicPlayer.pause();
@@ -84,6 +110,8 @@
       musicArtist.innerHTML = artist;
       playerSource.setAttribute("src", path);
       musicPlayer.load();
+      musicPlayer.currentTime = 0;
+      musicPlayer.play();
     }
 
     function choiceMusic() {
@@ -93,7 +121,6 @@
       if (trList.length > 1) {
         while (true) {
           randomNumber = Math.floor(Math.random() * trList.length);
-          console.log(randomNumber);
 
           var randomSource = String(trList[randomNumber].onclick);
           var sourcePlayed = String(document.getElementById("hiddenMusicPlayed").innerHTML)
@@ -103,8 +130,13 @@
             return
           }
         }
+      } else if (trList.length == 1) {
+        trList[0].click();
       } else {
-        trList[0].click()
+        var musicPlayer = document.getElementById("musicPlayer");
+        musicPlayer.load();
+        musicPlayer.currentTime = 0;
+        musicPlayer.play();
       }
     }
   </script>
