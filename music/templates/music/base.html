@@ -70,30 +70,39 @@
   </body>
   <script type="text/javascript">
     window.addEventListener('load', function() {
+      document.body.style.opacity = 1
+
       var musicPlayerDiv = document.getElementsByClassName("musicPlayer")[0];
 
       var oldMusicPlayerDiv = localStorage.getItem('musicPlayer');
       var oldMusicTime = localStorage.getItem('musicTime');
+      var oldIsPlaying = sessionStorage.getItem('isPlaying');
 
       if (oldMusicPlayerDiv != undefined) {
         musicPlayerDiv.innerHTML = oldMusicPlayerDiv;
 
         var musicPlayer = document.getElementById("musicPlayer");
-        musicPlayer.addEventListener("canplay", putTimeMusicAtStart(musicPlayer, oldMusicTime));
+        musicPlayer.addEventListener("canplay", putTimeMusicAtStart(musicPlayer, oldMusicTime, oldIsPlaying));
       };
     });
 
-    function putTimeMusicAtStart(musicPlayer, oldMusicTime) {
+    function putTimeMusicAtStart(musicPlayer, oldMusicTime, isPlaying) {
       musicPlayer.currentTime = oldMusicTime;
-      musicPlayer.play();
+      if (isPlaying == "true") {
+        musicPlayer.play();
+      } else {
+        musicPlayer.paused = true;
+      }
     }
 
     window.addEventListener('unload', function() {
       var musicPlayerDiv = document.getElementsByClassName("musicPlayer")[0];
-      var musicTime = document.getElementById("musicPlayer").currentTime;
+      var musicPlayer = document.getElementById("musicPlayer");
+      var musicTime = musicPlayer.currentTime;
 
       localStorage.setItem('musicPlayer', musicPlayerDiv.innerHTML);
       localStorage.setItem('musicTime', musicTime);
+      sessionStorage.setItem('isPlaying', !musicPlayer.paused);
     });
 
     function playMusic(path, name, artist) {

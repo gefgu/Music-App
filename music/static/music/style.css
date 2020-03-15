@@ -1,7 +1,15 @@
+body *, body {
+  transition: 0.5s all ease-in-out;
+}
+
+body {
+  opacity: 0;
+}
+
 div.musicPlayer, div.fixed-bottom {
   width: 100%;
   background-color: black;
-  height: 15%;
+  height: 13%;
   color: white;
 }
 
@@ -11,23 +19,25 @@ div.fixed-bottom {
 
 #artistPlayed {
   font-style: italic;
-  margin-top: -15px;
+  margin-top: 0;
+  width: 25%;
 }
 
 #musicPlayed {
   font-size: 2em;
   font-weight: bold;
   width: 30%;
+  margin-right: 10px;
 }
 
 #musicPlayer {
-  margin-top: 15px;
-  width: 70%;
+  margin-top: 20px;
+  width: 60%;
 }
 
-.music-row {
+.music-row, .playlist-list a {
   cursor: pointer;
-  margin: 20px;
+  margin: 20px 40px 20px 0;
   width: 300px;
 }
 
@@ -37,9 +47,13 @@ div.fixed-bottom {
   padding-bottom: 0;
 }
 
-.music-listing {
+.music-listing, .playlist-listing {
   display: flex;
   flex-wrap: wrap;
+}
+
+.playlist-list h1 {
+  margin-bottom: 40px;
 }
 
 body {
@@ -55,12 +69,14 @@ a:hover {
   text-decoration: none;
 }
 
-h2 {
-  padding: 10px;
-}
-
 .musicPlayer {
   display: flex;
   flex-wrap: wrap;
   padding: 25px 5px;
+}
+
+@media only screen and (min-width: 1024px) {
+  #artistPlayed {
+    margin-top: -15px;
+  }
 }
