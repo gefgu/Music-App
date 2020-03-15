@@ -26,32 +26,13 @@
         <li class="nav-item">
           <a class="nav-link" href="{% url 'music:playlists' %}">Playlists</a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'music:upload_music' %}">Upload Musics</a>
+        </li>
 
-        {% if user.is_authenticated %}
-
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'music:logout' %}">Logout</a>
-          </li>
-
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'music:upload_music' %}">Upload Musics</a>
-          </li>
-
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'music:create_playlist' %}">Create Playlist</a>
-          </li>
-
-        {% else %}
-
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'music:login' %}">Login</a>
-          </li>
-
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'music:register' %}">Sign Up</a>
-          </li>
-
-        {% endif %}
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'music:create_playlist' %}">Create Playlist</a>
+        </li>
 
       </ul>
       <form class="form-inline my-2 my-lg-0">

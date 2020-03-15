@@ -12,26 +12,25 @@ from django.contrib.auth import (
     login,
     logout
 )
-from .forms import UserLoginForm, UserRegisterForm
 
 # Create your views here.
-class MusicFileListView(LoginRequiredMixin, ListView):
+class MusicFileListView(ListView):
     model = MusicFile
     context_object_name = 'musics'
     template_name = 'music/index.html'
     queryset = MusicFile.objects.all().order_by("-id")
 
-class PlaylistListView(LoginRequiredMixin, ListView):
+class PlaylistListView(ListView):
     model = Playlist
     context_object_name = "playlists"
     template_name = 'music/playlists.html'
 
-class PlaylistDetailView(LoginRequiredMixin, DetailView):
+class PlaylistDetailView(DetailView):
     model = Playlist
     template_name = 'music/index.html'
     context_object_name = "playlist"
 
-class MusicCreateView(LoginRequiredMixin, CreateView):
+class MusicCreateView(CreateView):
     model = MusicFile
     fields = ['name', 'artist', 'file']
     success_url = reverse_lazy('music:index')
@@ -44,7 +43,7 @@ class MusicCreateView(LoginRequiredMixin, CreateView):
         context['title'] = "Upload Music"
         return context
 
-class PlaylistCreateView(LoginRequiredMixin, CreateView):
+class PlaylistCreateView(CreateView):
     model = Playlist
     fields = ['name', 'musics']
     success_url = reverse_lazy('music:index')
@@ -61,46 +60,3 @@ class PlaylistCreateView(LoginRequiredMixin, CreateView):
 
 def musicPlayer(request):
     return render(request, "music/musicPlayer.html")
-
-## LOGIN SYSTEM
-
-def login_view(request):
-    next = request.GET.get('next')
-    form = UserLoginForm(request.POST or None)
-    if form.is_valid():
-        username = form.cleaned_data.get('username')
-        password = form.cleaned_data.get('password')
-        user = authenticate(username=username, password=password)
-        login(request, user)
-        if next:
-            return redirect(next)
-        return redirect('/')
-
-    context = {
-        'form': form,
-    }
-    return render(request, "music/login.html", context)
-
-
-def register_view(request):
-    next = request.GET.get('next')
-    form = UserRegisterForm(request.POST or None)
-    if form.is_valid():
-        user = form.save(commit=False)
-        password = form.cleaned_data.get('password')
-        user.set_password(password)
-        user.save()
-        new_user = authenticate(username=user.username, password=password)
-        login(request, new_user)
-        if next:
-            return redirect(next)
-        return redirect('/')
-    context = {
-        'form': form,
-    }
-    return render(request, "music/signup.html", context)
-
-
-def logout_view(request):
-    logout(request)
-    return redirect('/')
